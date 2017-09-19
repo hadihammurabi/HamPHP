@@ -1,46 +1,123 @@
-<script type="text/javascript" src="../app/views/js/jquery.min.js"></script>
-<script type="text/javascript" src="../app/views/js/tether.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../app/views/css/bootstrap/bootstrap.min.css">
-<script type="text/javascript" src="../app/views/js/bootstrap.min.js"></script>
-
 <?php
 
+// Memasukkan semua file yang dibutuhkan
 require_once 'session.php';
 require_once 'error_handler.php';
 require_once 'url.php';
 require_once 'request.php';
+require_once 'loader.php';
 
 require_once 'controller.php';
 require_once 'model.php';
 
 require_once 'configs/env.php';
 
-if(!$env['production']){
-	ini_set('display_errors', 'On');
-    error_reporting(E_ALL);
+// Fungsi untuk generasi error pada syntax
+function phperrorlinter($errno, $errstr, $errfile, $errline){
+	$error_name = 'Number '.$errno;
+	$error_message = 'Pesan: "'.$errstr.'"<br/> File: '.$errfile.'<br/> Baris: '.$errline.'<br/> ';
+	$error = new ErrorHandler();
+	$load = new Loader();
+	$error->set($error_name,$error_message);
+	$load->view('error/error',
+		array(
+			'error_name'	=> $error_name,
+			'error_message'	=> $error->get($error_name)
+		)
+	);
 }
 
+// Pengecekan apakah proyek dalam mode produksi atau tidak
+if(!$env['production']){
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	set_error_handler('phperrorlinter');
+    error_reporting(E_ALL);
+}else{
+	ini_set('display_errors', 'Off');
+}
+
+// Parsing URL
 $url = new URL();
 $urlcallparts = $url->parse()['call_parts'];
 
+// Pengambilan nama controller
 if(count($urlcallparts) > 0){
 	$controllername = ucwords($urlcallparts[0]);
-	if(file_exists('app/controllers/'.$controllername.'.php')){
+}else{
+	$controllername = ucwords($env['default']['controller']);
+}
+
+// Pengecekan keberadaan file
+if(file_exists('app/controllers/'.$controllername.'.php')){
 		require_once 'app/controllers/'.$controllername.'.php';
+
+		// Pengecekan keberadaan class/controller
 		if(class_exists($controllername)){
 			$controller = new $controllername();
 	
+			// Pengambilan nama method
 			if(!isset($urlcallparts[1]))
 				$methodname = 'index';
 			else
 				$methodname = $urlcallparts[1];
 	
-			if(method_exists($controller, $methodname))
-				$controller->$methodname();
-			else{
-				$controller->error->set('method_unexists','Method tidak tersedia');
-				echo $controller->error->display('method_unexists');
+			// Pengecekan keberadaan method dan parameternya (hanya 1 buah parameter)
+			if(method_exists($controller, $methodname)){
+				if(isset($urlcallparts[2]))
+					$controller->$methodname($urlcallparts[2]);
+				else 
+					$controller->$methodname();
+			}else{
+				// Pesan apabila method yang dituju tidak tersedia
+				if(!$env['production']){
+					$error_name = 'method_unexists';
+					$error_message = 'Class <i><b>'.ucwords($urlcallparts[0]).'</b></i> tidak memiliki method/fungsi <i><b>'.((isset($urlcallparts[1]))?$urlcallparts[1]:'index').'</b></i>.';
+				}else{
+					$error_name = '404';
+					$error_message = 'Halaman yang Anda tuju, tidak tersedia.';
+				}
+				$controller->error->set($error_name,$error_message);
+				$controller->load->view('error/error',
+					array(
+						'error_name'	=> $error_name,
+						'error_message'	=> $controller->error->get($error_name)
+					)
+				);
 			}
+		}else{
+			// Pesan apabila class/controller tidak tersedia
+			$controller = new Controller();
+			if(!$env['production']){
+				$error_name = 'class_unexists';
+				$error_message = 'Class <i><b>'.ucwords($urlcallparts[0]).'</b></i> tidak tersedia pada file <i><b>controllers/'.$urlcallparts[0].'.php</b></i>';
+			}else{
+				$error_name = '404';
+				$error_message = 'Halaman yang Anda tuju, tidak tersedia.';
+			}
+			$controller->error->set($error_name,$error_message);
+			$controller->load->view('error/error',
+				array(
+					'error_name'	=> $error_name,
+					'error_message'	=> $controller->error->get($error_name)
+				)
+			);
 		}
+	}else{
+		// Pesan apabila file tidak tersedia
+		$controller = new Controller();
+		if(!$env['production']){
+			$error_name = 'file_unexists';
+			$error_message = 'File <i><b>'.$urlcallparts[0].'.php</b></i> tidak tersedia';
+		}else{
+			$error_name = '404';
+			$error_message = 'Halaman yang Anda tuju, tidak tersedia.';
+		}
+		$controller->error->set($error_name,$error_message);
+		$controller->load->view('error/error',
+			array(
+				'error_name'	=> $error_name,
+				'error_message'	=> $controller->error->get($error_name)
+			)
+		);
 	}
-}

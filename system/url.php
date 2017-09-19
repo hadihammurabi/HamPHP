@@ -15,6 +15,7 @@ class URL{
 			foreach ($tmp as $key => $value) {
 				if($value != "") array_push($tmparr, $value);
 			}
+			$path['uri'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 			$path['call_utf8'] = $request_path[0];
 			$path['call_parts'] = $tmparr;
 
