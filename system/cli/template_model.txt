@@ -1,0 +1,10 @@
+<?php
+
+class <name> extends Model{
+	function set(){
+		
+	}
+	function get(){
+		
+	}
+}
