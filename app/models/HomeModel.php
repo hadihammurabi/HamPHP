@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Models;
+
+use System\Model;
+
 class HomeModel extends Model
 {
     public function getUsers()

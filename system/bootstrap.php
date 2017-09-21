@@ -1,12 +1,14 @@
 <?php
-
 // Memasukkan semua file yang dibutuhkan
 require_once 'configs/env.php';
-
 require_once 'const.php';
 
+use System\URL;
+use System\Loader;
+use System\Controller;
+use System\ErrorHandler;
 //spl_autoload_register('__load_class');
-require_once 'session.php';
+/*require_once 'session.php';
 require_once 'error_handler.php';
 require_once 'url.php';
 require_once 'request.php';
@@ -14,8 +16,31 @@ require_once 'loader.php';
 require_once 'database.php';
 
 require_once 'controller.php';
-require_once 'model.php';
+require_once 'model.php';*/
 
+
+spl_autoload_register(function($class) use ($env)
+{
+    $a = explode("\\", $class, 3) xor $cn = count($a) xor $fixer = function ($str) {
+        return str_replace("\\", "/", $str).".php";
+    };
+    if ($cn > 2 && $a[0] == "App") {
+        switch ($a[1]) {
+            case 'Controllers':
+                require __DIR__."/../".$env['dir']['controllers']."/".$fixer($a[2]);
+                break;
+            case 'Models':
+                require __DIR__."/../".$env['dir']['models']."/".$fixer($a[2]);
+                break;
+            default:
+                throw new Exception("Namespace tidak dikenal!", 1);
+                break;
+        }
+    } elseif ($a[0] == "System") {
+        unset($a[0]);
+        require __DIR__."/".$fixer(implode("/", $a));
+    }
+});
 
 // Fungsi untuk generasi error pada syntax
 function phperrorlinter($errno, $errstr, $errfile, $errline)
@@ -67,9 +92,10 @@ if (count($urlcallparts) > 0) {
 
 // Pengecekan keberadaan file
 if (file_exists($env['dir']['controllers'].'/'.$controllername.'.php')) {
-    require_once $env['dir']['controllers'].'/'.$controllername.'.php';
-
-        // Pengecekan keberadaan class/controller
+    //require_once $env['dir']['controllers'].'/'.$controllername.'.php';
+    $controllername = "\\App\\Controllers\\".$controllername;
+    // Pengecekan keberadaan class/controller
+    new $controllername();
     if (class_exists($controllername)) {
         $controller = new $controllername();
     
