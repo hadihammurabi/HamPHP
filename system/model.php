@@ -1,11 +1,13 @@
 <?php
 
-class Model{
-	public $db;
+class Model
+{
+    public $db;
 
-	function __construct(){
-		$dbset = $GLOBALS['env']['db'];
+    public function __construct()
+    {
+        $dbset = $GLOBALS['env']['db'];
 
-		$this->db = new Database($dbset['driver'], $dbset['host'],$dbset['username'],$dbset['password'],$dbset['name']);
-	}
+        $this->db = new Database($dbset['driver'], $dbset['host'], $dbset['username'], $dbset['password'], $dbset['name']);
+    }
 }
