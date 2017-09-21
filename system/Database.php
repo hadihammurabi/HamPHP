@@ -4,7 +4,7 @@ namespace System;
 
 use PDO;
 use System\Hub\Singleton;
-use Contracts\Database\Database as DatabaseContract;
+use System\Contracts\Database\Database as DatabaseContract;
 
 class Database implements DatabaseContract
 {

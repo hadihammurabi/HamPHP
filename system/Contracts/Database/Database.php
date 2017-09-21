@@ -1,6 +1,6 @@
 <?php
 
-namespace Contracts\Database;
+namespace System\Contracts\Database;
 
 interface Database
 {
