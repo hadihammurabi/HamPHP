@@ -1,23 +1,26 @@
 <?php
 
 // Memasukkan semua file yang dibutuhkan
+require_once 'configs/env.php';
+
+require_once 'const.php';
 require_once 'session.php';
 require_once 'error_handler.php';
 require_once 'url.php';
 require_once 'request.php';
 require_once 'loader.php';
+require_once 'database.php';
 
 require_once 'controller.php';
 require_once 'model.php';
 
-require_once 'configs/env.php';
 
 // Fungsi untuk generasi error pada syntax
 function phperrorlinter($errno, $errstr, $errfile, $errline){
 	$error_name = 'Number '.$errno;
 	$error_message = 'Pesan: "'.$errstr.'"<br/> File: '.$errfile.'<br/> Baris: '.$errline.'<br/> ';
 	$error = new ErrorHandler();
-	$load = new Loader();
+	$load = new Loader($error);
 	$error->set($error_name,$error_message);
 	$load->view('error/error',
 		array(
@@ -25,6 +28,14 @@ function phperrorlinter($errno, $errstr, $errfile, $errline){
 			'error_message'	=> $error->get($error_name)
 		)
 	);
+}
+
+// Menampilkan basepath
+function basepath($path, $type='css'){
+	if($type == 'css')
+		echo $GLOBALS['env']['dir']['views'].'/'.$path;
+	else if($type == 'js')
+		echo $GLOBALS['env']['dir']['views'].'/'.$path;
 }
 
 // Pengecekan apakah proyek dalam mode produksi atau tidak
@@ -49,8 +60,8 @@ if(count($urlcallparts) > 0){
 }
 
 // Pengecekan keberadaan file
-if(file_exists('app/controllers/'.$controllername.'.php')){
-		require_once 'app/controllers/'.$controllername.'.php';
+if(file_exists($env['dir']['controllers'].'/'.$controllername.'.php')){
+		require_once $env['dir']['controllers'].'/'.$controllername.'.php';
 
 		// Pengecekan keberadaan class/controller
 		if(class_exists($controllername)){

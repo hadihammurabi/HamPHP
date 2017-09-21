@@ -2,7 +2,13 @@
 
 class Home extends Controller{
 	function index(){
-		echo 'Home::Index';
-		$this->error->set('custom_error','Ini error');
+		$this->load->model('HomeModel');
+
+		$homemodel = new HomeModel();
+		$homemodel->getUsers();
+
+		$this->load->view('header');
+		$this->load->view('home/home');
+		$this->load->view('footer');
 	}
 }
