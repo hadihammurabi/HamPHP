@@ -4,8 +4,14 @@ namespace System;
 
 class Model
 {
-    public $db;
+	/**
+	 * @var System\Database
+	 */
+    protected $db;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $dbset = $GLOBALS['env']['db'];

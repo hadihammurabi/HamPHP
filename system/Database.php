@@ -3,9 +3,12 @@
 namespace System;
 
 use PDO;
+use System\Hub\Singleton;
 
 class Database
 {
+	use Singleton;
+	
     private $pdo;
 
     public function __construct($driver, $host, $port, $username, $password, $dbname)
