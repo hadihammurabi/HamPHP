@@ -4,9 +4,11 @@ namespace System;
 
 use PDO;
 use System\Hub\Singleton;
+use System\Contracts\Database\Selector;
+use System\Contracts\Database\Decorator;
 use System\Contracts\Database\Database as DatabaseContract;
 
-class Database implements DatabaseContract
+class Database implements DatabaseContract, Selector, Decorator
 {
     use Singleton;
 
