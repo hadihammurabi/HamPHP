@@ -4,11 +4,12 @@ namespace System;
 
 use PDO;
 use System\Hub\Singleton;
+use Contracts\Database\Database as DatabaseContract;
 
-class Database
+class Database implements DatabaseContract
 {
 	use Singleton;
-	
+
     private $pdo;
 
     public function __construct($driver, $host, $port, $username, $password, $dbname)
