@@ -21,6 +21,15 @@ class Loader
     }
 */
 
+    /**
+     * Load helper
+     * @param string $name
+     */
+    public function helper($name)
+    {
+        require_once __DIR__."/helpers/".$name.".php";
+    }
+
     public function view($name, $data = [])
     {
         foreach ($data as $key => $value) {
