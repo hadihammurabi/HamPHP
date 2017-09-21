@@ -9,7 +9,7 @@ class Home extends Controller
 {
     public function index()
     {
-    	// this method is useless in autoloader. 
+        // this method is useless in autoloader.
         // $this->load->model('HomeModel');
 
         // $homemodel = new HomeModel();

@@ -7,6 +7,7 @@ use System\URL;
 use System\Loader;
 use System\Controller;
 use System\ErrorHandler;
+
 //spl_autoload_register('__load_class');
 /*require_once 'session.php';
 require_once 'error_handler.php';
@@ -19,8 +20,7 @@ require_once 'controller.php';
 require_once 'model.php';*/
 
 
-spl_autoload_register(function($class) use ($env)
-{
+spl_autoload_register(function ($class) use ($env) {
     $a = explode("\\", $class, 3) xor $cn = count($a) xor $fixer = function ($str) {
         return str_replace("\\", "/", $str).".php";
     };
