@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controllers;
+
+use System\Controllers;
+
 class <<name>> extends Controller{
 	function __construct(){
 		parent::__construct();
