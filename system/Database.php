@@ -8,7 +8,7 @@ use Contracts\Database\Database as DatabaseContract;
 
 class Database implements DatabaseContract
 {
-	use Singleton;
+    use Singleton;
 
     private $pdo;
 

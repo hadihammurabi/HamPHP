@@ -4,9 +4,9 @@ namespace System;
 
 class Model
 {
-	/**
-	 * @var System\Database
-	 */
+    /**
+     * @var System\Database
+     */
     protected $db;
 
     /**

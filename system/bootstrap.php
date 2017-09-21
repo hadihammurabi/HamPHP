@@ -8,7 +8,6 @@ use System\Loader;
 use System\Controller;
 use System\ErrorHandler;
 
-
 /*require_once 'session.php';
 require_once 'error_handler.php';
 require_once 'url.php';
@@ -19,7 +18,9 @@ require_once 'database.php';
 require_once 'controller.php';
 require_once 'model.php';*/
 
-
+/**
+ * Autoloader.
+ */
 spl_autoload_register(function ($class) use ($env) {
     $a = explode("\\", $class, 3) xor $cn = count($a) xor $fixer = function ($str) {
         return str_replace("\\", "/", $str).".php";
