@@ -8,7 +8,7 @@ use System\Loader;
 use System\Controller;
 use System\ErrorHandler;
 
-//spl_autoload_register('__load_class');
+
 /*require_once 'session.php';
 require_once 'error_handler.php';
 require_once 'url.php';

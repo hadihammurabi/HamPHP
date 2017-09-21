@@ -25,4 +25,5 @@ $env['db']['host']            = 'localhost';
 $env['db']['username']        = 'root';
 $env['db']['password']        = 'permana';
 $env['db']['name']            = 'hamphp';
+$env['db']['port']            = '3306';
 $env['db']['prefix']        = 'ham_';

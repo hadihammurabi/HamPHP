@@ -10,6 +10,6 @@ class Model
     {
         $dbset = $GLOBALS['env']['db'];
 
-        $this->db = new Database($dbset['driver'], $dbset['host'], $dbset['username'], $dbset['password'], $dbset['name']);
+        $this->db = new Database($dbset['driver'], $dbset['host'], $dbset['port'], $dbset['username'], $dbset['password'], $dbset['name']);
     }
 }
