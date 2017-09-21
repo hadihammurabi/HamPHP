@@ -4,12 +4,14 @@ namespace App\Controllers;
 
 use System\Controllers;
 
-class <<name>> extends Controller{
-	function __construct(){
-		parent::__construct();
-	}
+class <<name>> extends Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	function index(){
-
-	}
+    public function index()
+    {
+    }
 }
