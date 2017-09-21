@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__."/rstr.php";
+
 /**
  * @author Ammar Faizi <ammarfaizi2@gmail.com>
  * @license MIT
