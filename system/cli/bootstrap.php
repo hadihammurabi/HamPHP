@@ -1,5 +1,6 @@
 <?php
 
+require_once 'configs/env.php';
 require_once 'display.php';
 require_once 'actions.php';
 
@@ -19,11 +20,19 @@ if(isset($argv[1])){
 					$actions->generate('controller',$argv[3]);
 					return;
 				}else{
-					$display->error(1);
+					$display->error(2);
+					return;
+				}
+			}else if(strtolower($argv[2]) == 'model'){
+				if(isset($argv[3])){
+					$actions->generate('model',$argv[3]);
+					return;
+				}else{
+					$display->error(2);
 					return;
 				}
 			}else{
-				$display->error(0);
+				$display->error(1);
 				return;
 			}
 		}
@@ -31,7 +40,7 @@ if(isset($argv[1])){
 	}else if(strtolower($argv[1]) == 'd' || strtolower($argv[1]) == 'delete') {
 		$delete = true;
 		$display->helpD();
-	}
+	}else $display->error(0);
 }else $display->help();
 
 

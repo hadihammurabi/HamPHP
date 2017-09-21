@@ -13,9 +13,7 @@
 		</p>
 		<hr/>
 		<p>
-			<pre>
-&copy; 2017 Hadi Hidayat Hammurabi
-			</pre>
+			<pre>&copy; 2017 Hadi Hidayat Hammurabi</pre>
 		</p>
 	</div>
 </div>
