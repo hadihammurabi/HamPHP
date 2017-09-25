@@ -5,13 +5,14 @@
 
 # HamPHP
 
-Descriptions
+HamPHP merupakan web framework yang dibuat dengan bahasa PHP.
 
 
 Installation
 ============
 
-Detail of installation
+1. Clone repository ini
+2. Lakukan konfigurasi server
 
 Features
 ========
