@@ -4,12 +4,14 @@ namespace System;
 
 use System\Controller;
 use System\Env;
+use System\Loader;
 
 class URL
 {
     public function __construct()
     {
         $this->env = new Env();
+        $this->load = new Loader();
     }
 
     public function parse()
@@ -27,7 +29,9 @@ class URL
             }
             $path['uri'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
             $path['call_utf8'] = $request_path[0];
-            $path['call_parts'] = $tmparr;
+            
+            if(isset($tmparr[0]))
+                $path['call_parts'] = ($tmparr[0] == 'index.php')?array_slice($tmparr,1):$tmparr;
 
             if (isset($request_path[1])) {
                 $path['query_utf8'] = urldecode($request_path[1]);
@@ -55,5 +59,20 @@ class URL
             die();
         }
         return $path;
+    }
+
+    function route(){
+        $urlcallparts = isset($this->parse()['call_parts'])?$this->parse()['call_parts']:'';
+
+        // Pengambilan nama controller
+        $controllername = ucwords(isset($urlcallparts[0])?$urlcallparts[0]:$this->env->get('default')['controller']);
+        $controllernamespace = "App\\Controller\\$controllername";
+
+        // Load controller
+        $controller = $this->load->controller($controllername);
+
+        // Load method
+        $methodname = isset($urlcallparts[1])?$urlcallparts[1]:'index';
+        $this->load->method($controller, $methodname);
     }
 }
