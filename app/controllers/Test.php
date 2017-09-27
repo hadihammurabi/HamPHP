@@ -13,6 +13,6 @@ class Test extends Controller
 
     public function index()
     {
-	echo 123;
+        echo 123;
     }
 }

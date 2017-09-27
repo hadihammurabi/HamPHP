@@ -30,8 +30,9 @@ class URL
             $path['uri'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
             $path['call_utf8'] = $request_path[0];
             
-            if(isset($tmparr[0]))
-                $path['call_parts'] = ($tmparr[0] == 'index.php')?array_slice($tmparr,1):$tmparr;
+            if (isset($tmparr[0])) {
+                $path['call_parts'] = ($tmparr[0] == 'index.php')?array_slice($tmparr, 1):$tmparr;
+            }
 
             if (isset($request_path[1])) {
                 $path['query_utf8'] = urldecode($request_path[1]);
@@ -42,7 +43,7 @@ class URL
                     $path['query_vars'][$t[0]] = $t[1];
                 }
             }
-        }else{
+        } else {
             $controller = new Controller();
 
             $error_name = 'hostnotsetyet';
@@ -61,7 +62,8 @@ class URL
         return $path;
     }
 
-    function route(){
+    function route()
+    {
         $urlcallparts = isset($this->parse()['call_parts'])?$this->parse()['call_parts']:'';
 
         // Pengambilan nama controller
