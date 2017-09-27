@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use System\Controller;
 
-class <<name>> extends Controller
+class Test extends Controller
 {
     public function __construct()
     {
@@ -13,5 +13,6 @@ class <<name>> extends Controller
 
     public function index()
     {
+	echo 123;
     }
 }
