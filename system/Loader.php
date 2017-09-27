@@ -2,29 +2,19 @@
 
 namespace System;
 
+use System\Env;
+
 class Loader
 {
     public $vars;
-    
+    private $env;
+
     public function __construct($obj)
     {
+        $this->env = new Env();
         $this->vars = get_object_vars($obj);
     }
-    
-/**
- * useless in autoloader
- *
-    public function model($modelname)
-    {
-        $modelsdir = $GLOBALS['env']['dir']['models'].'/'.$modelname.'.php';
-        require $modelsdir;
-    }
-*/
 
-    /**
-     * Load helper
-     * @param string $name
-     */
     public function helper($name)
     {
         require_once __DIR__."/helpers/".$name.".php";
@@ -36,8 +26,7 @@ class Loader
             $$key = $value;
         }
         
-        $pagesdir = $GLOBALS['env']['dir']['pages'];
-
+        $pagesdir = $this->env->get('dir')['pages'];
         require $pagesdir.'/'.$name.'.php';
     }
 

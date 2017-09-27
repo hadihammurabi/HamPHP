@@ -2,19 +2,16 @@
 
 namespace System;
 
+use System\Env;
+
 class Model
 {
-    /**
-     * @var System\Database
-     */
     protected $db;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
-        $dbset = $GLOBALS['env']['db'];
+        $this->env = new Env();
+        $dbset = $this->env->get('db');
 
         $this->db = new Database($dbset['driver'], $dbset['host'], $dbset['port'], $dbset['username'], $dbset['password'], $dbset['name']);
     }

@@ -1,7 +1,4 @@
 <div class="container">
-	<div class="alert alert-success">
-		Aplikasi Anda berhasil berjalan di <b><i><?php echo $GLOBALS['env']['host']['root']; ?></i></b>.
-	</div>
 	<div class="jumbotron">
 		<h1>Selamat Datang di HamPHP</h1><hr/>
 		<p>

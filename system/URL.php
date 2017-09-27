@@ -2,16 +2,20 @@
 
 namespace System;
 
+use System\Controller;
+use System\Env;
+
 class URL
 {
     public function __construct()
     {
+        $this->env = new Env();
     }
 
     public function parse()
     {
         $path = array();
-        if (isset($_SERVER['REQUEST_URI'])) {
+        if (isset($_SERVER['REQUEST_URI']) && $_SERVER['HTTP_HOST'] == $this->env->get('host')['root']) {
             $request_path = explode('?', $_SERVER['REQUEST_URI']);
 
             $tmp = explode('/', $request_path[0]);
@@ -34,6 +38,21 @@ class URL
                     $path['query_vars'][$t[0]] = $t[1];
                 }
             }
+        }else{
+            $controller = new Controller();
+
+            $error_name = 'hostnotsetyet';
+            $error_message = 'Host yang Anda gunakan belum diatur pada <i><b>configs/env.php</b></i>.';
+
+            $controller->error->set($error_name, $error_message);
+            $controller->load->view(
+                'error/error',
+                array(
+                        'error_name'    => $error_name,
+                        'error_message'    => $controller->error->get($error_name)
+                    )
+            );
+            die();
         }
         return $path;
     }

@@ -82,14 +82,10 @@ if (!$env['production']) {
 
 // Parsing URL
 $url = new URL();
-$urlcallparts = $url->parse()['call_parts'];
+$urlcallparts = isset($url->parse()['call_parts'])?$url->parse()['call_parts']:'';
 
 // Pengambilan nama controller
-if (count($urlcallparts) > 0) {
-    $controllername = ucwords($urlcallparts[0]);
-} else {
-    $controllername = ucwords($env['default']['controller']);
-}
+$controllername = ucwords(isset($urlcallparts[0])?$urlcallparts[0]:$GLOBALS['env']['default']['controller']);
 
 // Pengecekan keberadaan file
 if (file_exists($env['dir']['controllers'].'/'.$controllername.'.php')) {
