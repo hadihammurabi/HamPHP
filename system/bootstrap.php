@@ -61,9 +61,10 @@ function phperrorlinter($errno, $errstr, $errfile, $errline)
 }
 
 // Menampilkan basepath
-function basepath($path, $type = 'css')
+function basepath($path)
 {
-    echo '/'.$GLOBALS['env']['dir']['views'].'/'.$path;
+    $dir = explode($_SERVER['DOCUMENT_ROOT'], DIR)[1];
+    echo $dir.'/../'.$GLOBALS['env']['dir']['views'].'/'.$path;
 }
 
 // Pengecekan apakah proyek dalam mode produksi atau tidak

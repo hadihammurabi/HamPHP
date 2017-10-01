@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use System\Controllers;
+use System\Controller;
 
 class Articles extends Controller
 {
@@ -13,5 +13,6 @@ class Articles extends Controller
 
     public function index()
     {
+    	echo 'sadasds';
     }
 }
