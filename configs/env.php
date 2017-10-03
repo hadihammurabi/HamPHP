@@ -4,7 +4,7 @@
 $env['production'] = false;
 
 // Host setting
-$env['host']['root']            = 'localhost';
+$env['host']['root']            = 'localhost:9000';
 // Struktur direktori
 $env['dir']['app']              = 'app';
 $env['dir']['controllers']      = $env['dir']['app'].    '/controllers';
@@ -19,8 +19,8 @@ $env['default']['model']        = '';
 // Konfigurasi database
 $env['db']['driver']            = 'mysql';
 $env['db']['host']              = 'localhost';
-$env['db']['username']          = 'debian-sys-maint';
-$env['db']['password']          = '';
-$env['db']['name']              = 'pgice';
+$env['db']['username']          = 'root';
+$env['db']['password']          = 'root';
+$env['db']['name']              = 'SIPIK';
 $env['db']['port']              = '3306';
 $env['db']['prefix']            = 'ham_';
