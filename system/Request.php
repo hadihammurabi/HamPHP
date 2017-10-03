@@ -4,13 +4,21 @@ namespace System;
 
 class Request
 {
-    public function __construct($url = '')
+    public function get()
     {
-        $this->get($url);
+    	$data = array();
+    	foreach ($_GET as $key => $value) {
+    		$data[$key] = addslashes(htmlentities($value));
+    	}
+    	return $data;
     }
-    public function get($url)
+
+    public function post()
     {
-        $URL = new URL();
-        print_r($URL->parse($url));
+    	$data = array();
+    	foreach ($_POST as $key => $value) {
+    		$data[$key] = addslashes(htmlentities($value));
+    	}
+    	return $data;
     }
 }
