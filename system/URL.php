@@ -1,11 +1,8 @@
 <?php
-
 namespace System;
-
 use System\Controller;
 use System\Env;
 use System\Loader;
-
 class URL
 {
     public function __construct()
@@ -13,7 +10,6 @@ class URL
         $this->env = new Env();
         $this->load = new Loader();
     }
-
     public function getUri()
     {
         $a = explode($_SERVER['DOCUMENT_ROOT'], $_SERVER['SCRIPT_FILENAME']);
@@ -29,12 +25,10 @@ class URL
         $uri = "/".trim($a, "/");
         return $uri;
     }
-
     public function parse()
     {
         $path = array();
         $request_path = explode('?', $this->getUri());
-
         $tmp = explode('/', $request_path[0]);
         $tmparr = array();
         foreach ($tmp as $key => $value) {
@@ -47,7 +41,6 @@ class URL
         
         if(isset($tmparr[0]))
             $path['call_parts'] = ($tmparr[0] == 'index.php')?array_slice($tmparr,1):$tmparr;
-
         if (isset($request_path[1])) {
             $path['query_utf8'] = urldecode($request_path[1]);
             $path['query'] = utf8_decode(urldecode($request_path[1]));
@@ -59,17 +52,13 @@ class URL
         }
         return $path;
     }
-
     function route(){
         $urlcallparts = isset($this->parse()['call_parts'])?$this->parse()['call_parts']:'';
-
         // Pengambilan nama controller
         $controllername = ucwords(isset($urlcallparts[0])?$urlcallparts[0]:$this->env->get('default')['controller']);
         $controllernamespace = "App\\Controller\\$controllername";
-
         // Load controller
         $controller = $this->load->controller($controllername);
-
         // Load method
         $methodname = isset($urlcallparts[1])?$urlcallparts[1]:'index';
         $this->load->method($controller, $methodname);

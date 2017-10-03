@@ -41,6 +41,16 @@ class Loader
         $controllerdir = $this->env->get('dir')['controllers'].'/'.$name.'.php';
         $controllernamespace = "App\\Controllers\\$name";
 
+        if (!$this->env->get('production')) {
+            $error_name = 'file_unexists';
+            $error_message = 'File <i><b>'.$name.'.php</b></i> tidak tersedia';
+        } else {
+            $error_name = '404';
+            $error_message = 'Halaman yang Anda tuju, tidak tersedia.';
+        }
+
+        $this->error->set($error_name, $error_message);
+
         if(file_exists($controllerdir)){
             require_once($controllerdir);
             if(class_exists($controllernamespace))
@@ -62,23 +72,12 @@ class Loader
                         'error_message'    => $this->error->get($error_name)
                 ));
             }    
-        }else{
-            if (!$this->env->get('production')) {
-                $error_name = 'file_unexists';
-                $error_message = 'File <i><b>'.$name.'.php</b></i> tidak tersedia';
-            } else {
-                $error_name = '404';
-                $error_message = 'Halaman yang Anda tuju, tidak tersedia.';
-            }
-
-            $this->error->set($error_name, $error_message);
-            
+        }else
             $this->view('error/error',
                 array(
                         'error_name'    => $error_name,
                         'error_message'    => $this->error->get($error_name)
                 ));
-        }
     }
 
     public function method($controller, $name){
