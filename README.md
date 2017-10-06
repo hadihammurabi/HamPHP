@@ -21,5 +21,5 @@ Detail of Features
 Examples
 ========
 
-[Buku Telepon (Phone Book)](https://github.com/robisemicolon/HamPHPBukuTelepon)
+* [Buku Telepon (Phone Book)](https://github.com/robisemicolon/HamPHPBukuTelepon)
 
