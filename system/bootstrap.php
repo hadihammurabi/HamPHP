@@ -1,7 +1,9 @@
 <?php
 // Memasukkan semua file yang dibutuhkan
 require_once 'configs/env.php';
-require_once 'const.php';
+// require_once 'const.php';
+
+require_once 'vendor/autoload.php';
 
 use System\URL;
 use System\Loader;
@@ -42,30 +44,6 @@ spl_autoload_register(function ($class) use ($env) {
         require __DIR__."/".$fixer(implode("/", $a));
     }
 });
-
-// Fungsi untuk generasi error pada syntax
-function phperrorlinter($errno, $errstr, $errfile, $errline)
-{
-    $error_name = 'Number '.$errno;
-    $error_message = 'Pesan: "'.$errstr.'"<br/> File: '.$errfile.'<br/> Baris: '.$errline.'<br/> ';
-    $error = new ErrorHandler();
-    $load = new Loader($error);
-    $error->set($error_name, $error_message);
-    $load->view(
-        'error/error',
-        array(
-            'error_name'    => $error_name,
-            'error_message'    => $error->get($error_name)
-        )
-    );
-}
-
-// Menampilkan basepath
-function basepath($path)
-{
-    $dir = explode($_SERVER['DOCUMENT_ROOT'], DIR)[1];
-    echo $dir.'/../'.$GLOBALS['env']['dir']['views'].'/'.$path;
-}
 
 // Pengecekan apakah proyek dalam mode produksi atau tidak
 if (!$env['production']) {

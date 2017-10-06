@@ -5,7 +5,8 @@ class Display
     private $error = array(
             0 => 'Unknown option',
             1 => 'Unknown file type, please use controller or model.',
-            2 => 'Udefined file name, please specify name of your new file.'
+            2 => 'Udefined file name, please specify name of your new file.',
+            3 => 'File doesn\'t exists'
         );
     public function help()
     {
@@ -32,5 +33,10 @@ class Display
     public function error($index)
     {
         echo 'HamPHP->error('.$index.') : '.$this->error[$index]."\n";
+    }
+    public function serveMessage($port){
+        echo " <> ================= HamPHP is running =================== <>\n";
+        echo " <> Let's open http://localhost:$port with your web browser. <>\n";
+        echo " <> ========================<>============================= <>\n";
     }
 }

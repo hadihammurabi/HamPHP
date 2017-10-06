@@ -1,6 +1,1 @@
-<?php
-try {
-    require_once 'system/bootstrap.php';
-} catch (PDOException $e) {
-    var_dump($e);
-}
+<?php require_once 'system/bootstrap.php';

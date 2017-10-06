@@ -2,8 +2,8 @@
     "require": {},
     "autoload": {
     	"psr-4": {
-    		"\\App": "app/",
-    		"\\System": "system/"
+    		"App\\": "app/",
+    		"System\\": "system/"
     	},
     	"files": [
     		"system/const.php",
